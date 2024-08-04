@@ -1,20 +1,28 @@
 #include "../exercise.h"
+#include <iostream>
 
 struct Fibonacci {
     unsigned long long cache[128];
     int cached;
 
-    // TODO: 实现正确的缓存优化斐波那契计算
+    // Constructor to initialize the cache and the cached index
+    Fibonacci() : cached(1) {
+        cache[0] = 0;
+        cache[1] = 1;
+    }
+
+    // Method to calculate Fibonacci numbers with caching
     unsigned long long get(int i) {
-        for (; false; ++cached) {
-            cache[cached] = cache[cached - 1] + cache[cached - 2];
+        // Update the cache up to the required Fibonacci number
+        for (; cached < i; ++cached) {
+            cache[cached + 1] = cache[cached] + cache[cached - 1];
         }
         return cache[i];
     }
 };
 
 int main(int argc, char **argv) {
-    // TODO: 初始化缓存结构体，使计算正确
+    // Initialize the Fibonacci structure
     Fibonacci fib;
     ASSERT(fib.get(10) == 55, "fibonacci(10) should be 55");
     std::cout << "fibonacci(10) = " << fib.get(10) << std::endl;
